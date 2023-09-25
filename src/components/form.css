@@ -1,0 +1,45 @@
+.form_book{
+    background-color: rgb(100, 100, 252);
+    display: flex;
+    flex-wrap: wrap;
+}
+.form_container{
+    margin-left: 5%;
+    margin-top: 5%;
+    display: flex;
+    
+    
+}
+.form{
+    display: flex;
+    justify-content: flex-start;
+    
+}
+.form_input{
+    width:350px;
+    height: 50px;
+    border-radius: 10px;
+    margin-left: 5px;
+    font-size: larger;
+    flex: 1;
+    border: none;
+    outline: none;
+}
+
+.form_button {
+    width: 100px;
+    height: 50px;
+    background-color: blue;
+    border: none;
+    outline: none;
+    border: 1px solid blue;
+    color: white;
+    font-size: large;
+    border-radius: 10px;
+    margin-left: 5px;
+   
+}
+.books {
+    display: flex;
+    overflow-x: scroll;
+}
