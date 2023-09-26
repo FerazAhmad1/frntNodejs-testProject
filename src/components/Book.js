@@ -2,15 +2,31 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import "./book.css";
 
-export const Book = ({ id, title, createdAt, clickHandler }) => {
+export const Book = ({ id, title, createdAt, setDeleted }) => {
   const [state, setState] = useState(true);
-  const [deleted, setDeleted] = useState(false);
+
   const fineRef = useRef();
   const calcFine = (dateString) => {
     const hour = Math.floor(
       (Date.now() - new Date(dateString).getTime()) / 3600000
     );
     return hour * 10 || 0;
+  };
+
+  const deleteBook = async (id) => {
+    const response = await axios.delete(
+      `http://localhost:3500/api/v1/book/${id}`
+    );
+    if (response.status == 204) {
+      const data = JSON.parse(localStorage.getItem("allbooks"));
+      const remainingData = data.filter((book) => book.id !== id);
+      localStorage.setItem("allbooks", JSON.stringify(remainingData));
+    }
+    setDeleted((prevDeleted) => !prevDeleted);
+  };
+  const clickHandler = (id) => {
+    deleteBook(id);
+    return;
   };
 
   return (
@@ -36,6 +52,7 @@ export const Book = ({ id, title, createdAt, clickHandler }) => {
                 return;
               } else {
                 clickHandler(id);
+                setDeleted((prevState) => !prevState);
               }
             }}
             className="return"

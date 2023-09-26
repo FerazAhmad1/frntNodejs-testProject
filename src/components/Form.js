@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Book } from "./Book";
-import "./form.css";
 import axios from "axios";
+import "./form.css";
 
 export const Form = () => {
   const [oneBook, setOneBook] = useState([]);
@@ -47,22 +47,6 @@ export const Form = () => {
     fetchdata();
   }, []);
 
-  const deleteBook = async (id) => {
-    const response = await axios.delete(
-      `http://localhost:3500/api/v1/book/${id}`
-    );
-    if (response.status == 204) {
-      const data = JSON.parse(localStorage.getItem("allbooks"));
-      const remainingData = data.filter((book) => book.id !== id);
-      localStorage.setItem("allbooks", JSON.stringify(remainingData));
-    }
-    setDeleted((prevDeleted) => !prevDeleted);
-  };
-  const clickHandler = (id) => {
-    deleteBook(id);
-    return;
-  };
-
   let renderData;
   if (localStorage.getItem("allbooks")) {
     console.log("yessssssssss");
@@ -85,7 +69,7 @@ export const Form = () => {
       <div className="books">
         {renderData.map((book) => (
           <div className="librrary">
-            <Book {...book} clickHandler={clickHandler} />
+            <Book {...book} setDeleted={setDeleted} />
           </div>
         ))}
       </div>
